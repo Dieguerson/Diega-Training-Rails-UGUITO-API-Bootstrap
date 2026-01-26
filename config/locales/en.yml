@@ -31,3 +31,8 @@
 
 en:
   hello: "Hello world"
+  active_record:
+    models:
+      note:
+        errors:
+          review_too_long: "Review type notes cannot be longer than %{max_length} words"
