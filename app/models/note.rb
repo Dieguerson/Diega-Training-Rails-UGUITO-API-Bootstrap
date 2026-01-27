@@ -27,6 +27,10 @@ class Note < ApplicationRecord
     'long'
   end
 
+  def word_count
+    content.split.count
+  end
+
   private
 
   def review_word_count_limit
@@ -36,9 +40,5 @@ class Note < ApplicationRecord
     if word_count > utility.max_review_length
       errors.add(:content, I18n.t('active_record.models.note.errors.review_too_long', max_length: utility.max_review_length))
     end
-  end
-
-  def word_count
-    content.split.count
   end
 end

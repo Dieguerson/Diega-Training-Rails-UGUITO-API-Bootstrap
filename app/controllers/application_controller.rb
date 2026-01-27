@@ -53,4 +53,10 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name document_number])
   end
+
+  def render_error(identifier, message: nil, meta: nil, status: :bad_request, utility: nil)
+    errors = ErrorResponseBuilder.new(status, utility)
+                                 .add_error(identifier, message: message, meta: meta)
+    render json: errors, status: errors.status
+  end
 end

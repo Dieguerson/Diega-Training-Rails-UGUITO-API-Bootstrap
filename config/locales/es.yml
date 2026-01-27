@@ -36,3 +36,6 @@ es:
       note:
         errors:
           review_too_long: "No puede extenderse más de %{max_length} palabras para notas de tipo reseña"
+  errors:
+    messages:
+      internal_server_error: "Error interno del servidor"
