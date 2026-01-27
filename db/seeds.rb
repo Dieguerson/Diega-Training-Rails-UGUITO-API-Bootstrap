@@ -34,5 +34,5 @@ User.all.find_each do |user|
   FactoryBot.create_list(:book, random_books_amount, user: user, utility: user.utility)
 
   random_notes_amount = [1,2,3,4,5].sample
-  FactoryBot.create_list(:note, random_notes_amount, user: user, utility: user.utility)
+  FactoryBot.create_list(:note, random_notes_amount, user: user)
 end
