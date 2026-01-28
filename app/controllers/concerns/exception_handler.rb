@@ -31,7 +31,7 @@ module ExceptionHandler
   end
 
   def render_nothing_not_found
-    head :not_found
+    render_error(:not_found, status: :not_found)
   end
 
   def render_client_forbidden

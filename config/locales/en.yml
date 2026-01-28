@@ -39,3 +39,4 @@ en:
   errors:
     messages:
       internal_server_error: "Internal server error"
+      not_found: "Resource not found"
