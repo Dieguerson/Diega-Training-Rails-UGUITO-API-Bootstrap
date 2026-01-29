@@ -40,3 +40,4 @@ es:
     messages:
       internal_server_error: "Error interno del servidor"
       not_found: "Recurso no encontrado"
+      invalid_note_type: "type_note invalido"

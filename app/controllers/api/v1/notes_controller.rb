@@ -4,7 +4,7 @@ module Api
       before_action :authenticate_user!
 
       def index
-        render json: notes_filtered, status: :ok, each_serializer: IndexNoteSerializer
+        render json: paginated_notes, status: :ok, each_serializer: IndexNoteSerializer
       end
 
       def show
@@ -13,19 +13,39 @@ module Api
 
       private
 
-      def note_type
-        params.require(:type)
+      def user_notes
+        current_user.notes
       end
 
-      def notes_filtered
-        Note.where(note_type: note_type, user_id: current_user.id)
-            .order(created_at: params.require(:order))
-            .page(params.require(:page))
-            .per(params.require(:page_size))
+      def note_type
+        return nil if params[:type].blank?
+
+        unless Note.note_types.keys.include?(params[:type])
+          raise Exceptions::InvalidParameterError, 'invalid_note_type'
+        end
+
+        params[:type]
+      end
+
+      def filtered_notes
+        return user_notes unless note_type.present?
+
+        user_notes.where(note_type: note_type)
+      end
+
+      def order
+        params[:order] || 'desc'
+      end
+
+      def paginated_notes
+        filtered_notes
+            .order(created_at: order)
+            .page(params[:page])
+            .per(params[:page_size])
       end
 
       def show_note
-        Note.find_by!(id: params.require(:id), user_id: current_user.id)
+        user_notes.find_by!(id: params.require(:id))
       end
     end
   end
