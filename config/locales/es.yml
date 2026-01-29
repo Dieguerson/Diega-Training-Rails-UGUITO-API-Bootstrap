@@ -34,10 +34,13 @@ es:
   active_record:
     models:
       note:
+        created: "Nota creada exitosamente"
         errors:
           review_too_long: "No puede extenderse más de %{max_length} palabras para notas de tipo reseña"
   errors:
     messages:
       internal_server_error: "Error interno del servidor"
       not_found: "Recurso no encontrado"
-      invalid_note_type: "type_note invalido"
+      invalid_note_type: "El tipo de nota no es válido."
+      malformed_request: "El cuerpo de la solicitud contiene JSON invalido"
+      param_is_missing: "Parametro ausente"

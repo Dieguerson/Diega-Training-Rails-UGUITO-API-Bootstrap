@@ -34,10 +34,13 @@ en:
   active_record:
     models:
       note:
+        created: "Note created successfully"
         errors:
           review_too_long: "Review type notes cannot be longer than %{max_length} words"
   errors:
     messages:
       internal_server_error: "Internal server error"
       not_found: "Resource not found"
-      invalid_note_type: "type_note invalid"
+      invalid_note_type: "The note type is invalid"
+      malformed_request: "The request body contains invalid JSON"
+      param_is_missing: "Parameter is missing"

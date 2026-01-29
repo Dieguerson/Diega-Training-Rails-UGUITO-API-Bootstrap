@@ -67,7 +67,7 @@ describe Api::V1::NotesController, type: :controller do
           {
             errors: [
               {
-                status: 400,
+                status: 422,
                 code: error_identifier,
                 message: I18n.t("errors.messages.#{error_identifier}"),
                 meta: nil
@@ -82,8 +82,8 @@ describe Api::V1::NotesController, type: :controller do
           expect(response_body.to_json).to eq(expected)
         end
 
-        it 'responds with 400 status' do
-          expect(response).to have_http_status(:bad_request)
+        it 'responds with 422 status' do
+          expect(response).to have_http_status(:unprocessable_entity)
         end
       end
     end
@@ -129,6 +129,66 @@ describe Api::V1::NotesController, type: :controller do
     context 'when there is not a user logged in' do
       context 'when fetching an note' do
         before { get :show, params: { id: Faker::Number.number * 1000 } }
+
+        it_behaves_like 'unauthorized'
+      end
+    end
+  end
+
+  describe 'POST #create' do
+    context 'when there is a user logged in' do
+      include_context 'with authenticated user'
+
+      context 'when creating a valid note' do
+        let(:note_params) { { title: Faker::Lorem.sentence(word_count: 2), content: Faker::Lorem.sentence(word_count: 2), type: :review } }
+
+        before { post :create, params: note_params }
+
+        it 'responds with appropriate message' do
+          expect(response_body['message']).to eq(I18n.t('active_record.models.note.created'))
+        end
+
+        it 'responds with 201 status' do
+          expect(response).to have_http_status(:created)
+        end
+      end
+
+      context 'when creating an invalid note' do
+        context 'when note type is invalid' do
+          let(:note_params) { { title: Faker::Lorem.sentence(word_count: 2), content: Faker::Lorem.sentence(word_count: 2), type: :invalid } }
+
+          before { post :create, params: note_params }
+
+          it 'responds with 422 status' do
+            expect(response).to have_http_status(:unprocessable_entity)
+          end
+        end
+
+        context 'when param is missing' do
+          let(:note_params) { { title: Faker::Lorem.sentence(word_count: 2), content: Faker::Lorem.sentence(word_count: 2) } }
+
+          before { post :create, params: note_params }
+
+          it 'responds with 400 status' do
+            expect(response).to have_http_status(:bad_request)
+          end
+        end
+
+        context 'when note_type is review but content is too long' do
+          let(:note_params) { { title: Faker::Lorem.sentence(word_count: 2), content: Faker::Lorem.sentence(word_count: 200), type: :review } }
+
+          before { post :create, params: note_params }
+
+          it 'responds with 422 status' do
+            expect(response).to have_http_status(:unprocessable_entity)
+          end
+        end
+      end
+    end
+
+    context 'when there is not a user logged in' do
+      context 'when creating an note' do
+        before { post :create, params: { id: Faker::Number.number * 1000 } }
 
         it_behaves_like 'unauthorized'
       end
