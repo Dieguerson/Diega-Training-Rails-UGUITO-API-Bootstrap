@@ -44,3 +44,4 @@ es:
       invalid_note_type: "El tipo de nota no es válido."
       malformed_request: "El cuerpo de la solicitud contiene JSON invalido"
       param_is_missing: "Parametro ausente"
+      utility_error: "Error en la utility"

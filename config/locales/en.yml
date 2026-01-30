@@ -44,3 +44,4 @@ en:
       invalid_note_type: "The note type is invalid"
       malformed_request: "The request body contains invalid JSON"
       param_is_missing: "Parameter is missing"
+      utility_error: "Error in the utility"

@@ -7,6 +7,11 @@ module Api
         render json: paginated_notes, status: :ok, each_serializer: IndexNoteSerializer
       end
 
+      def index_async
+        response = execute_async(RetrieveNotesWorker, current_user.id, index_async_params)
+        async_custom_response(response)
+      end
+
       def show
         render json: show_note, status: :ok, serializer: ShowNoteSerializer
       end
@@ -71,6 +76,10 @@ module Api
         else
           render_error(:unprocessable_entity, message: note.errors.messages, status: :unprocessable_entity,)
         end
+      end
+
+      def index_async_params
+        { author: params.require(:author) }
       end
     end
   end
