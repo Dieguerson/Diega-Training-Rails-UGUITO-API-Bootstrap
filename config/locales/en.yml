@@ -30,7 +30,8 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  active_admin:
+    clone_model: "Clone %{model}"
   active_record:
     models:
       note:
@@ -40,8 +41,8 @@ en:
   errors:
     messages:
       internal_server_error: "Internal server error"
-      not_found: "Resource not found"
       invalid_note_type: "The note type is invalid"
       malformed_request: "The request body contains invalid JSON"
+      not_found: "Resource not found"
       param_is_missing: "Parameter is missing"
       utility_error: "Error in the utility"

@@ -73,6 +73,10 @@ class Utility < ApplicationRecord
     self.class.name.underscore.split('_').first
   end
 
+  def to_s
+    name
+  end
+
   private
 
   def utility_type
