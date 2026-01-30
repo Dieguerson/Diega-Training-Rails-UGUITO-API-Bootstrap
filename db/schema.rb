@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_01_19_184928) do
+ActiveRecord::Schema.define(version: 2026_01_30_205151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,9 @@ ActiveRecord::Schema.define(version: 2026_01_19_184928) do
     t.jsonb "jsonb", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "lower_content_limit"
+    t.integer "upper_content_limit"
+    t.integer "max_review_length"
   end
 
   add_foreign_key "books", "users"

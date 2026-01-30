@@ -27,3 +27,18 @@ panel 'Utility' do
     end
   end
 end
+
+panel 'Note Content Length Configuration' do
+  attributes_table_for south_utility do
+    utility = locals[:south]
+    row 'Lower Content Limit (words)' do
+      utility.lower_content_limit
+    end
+    row 'Upper Content Limit (words)' do
+      utility.upper_content_limit
+    end
+    row 'Max Review Length (words)' do
+      utility.max_review_length
+    end
+  end
+end
