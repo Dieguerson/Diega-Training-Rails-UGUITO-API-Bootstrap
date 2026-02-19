@@ -22,5 +22,23 @@ panel 'Utility' do
     row :books_data_url do
       utility.books_data_url
     end
+    row :notes_data_url do
+      utility.notes_data_url
+    end
+  end
+end
+
+panel 'Note Content Length Configuration' do
+  attributes_table_for north_utility do
+    utility = locals[:north]
+    row 'Lower Content Limit (words)' do
+      utility.lower_content_limit
+    end
+    row 'Upper Content Limit (words)' do
+      utility.upper_content_limit
+    end
+    row 'Max Review Length (words)' do
+      utility.max_review_length
+    end
   end
 end

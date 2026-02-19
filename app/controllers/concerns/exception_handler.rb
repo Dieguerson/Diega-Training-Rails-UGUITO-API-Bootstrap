@@ -20,18 +20,18 @@ module ExceptionHandler
   def render_invalid_parameter(error)
     # The InvalidParameterError exception is raised with the error identifier as a parameter, and
     # the way to access this parameter is by doing error.message
-    render_error(error.message)
+    render_error(error.message, status: :unprocessable_entity)
   end
 
   def render_incorrect_parameter(error)
-    message = I18n.t('errors.messages.internal_server_error')
+    message = I18n.t('errors.messages.param_is_missing')
     render_error(
       :param_is_missing, message: message, meta: error.message, status: :bad_request
     )
   end
 
   def render_nothing_not_found
-    head :not_found
+    render_error(:not_found, status: :not_found)
   end
 
   def render_client_forbidden

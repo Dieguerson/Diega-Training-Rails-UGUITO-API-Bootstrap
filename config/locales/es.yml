@@ -30,4 +30,19 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 es:
-  hello: "Hola Mundo!"
+  active_admin:
+    clone_model: "Copiar %{model}"
+  active_record:
+    models:
+      note:
+        created: "Nota creada exitosamente"
+        errors:
+          review_too_long: "No puede extenderse más de %{max_length} palabras para notas de tipo reseña"
+  errors:
+    messages:
+      internal_server_error: "Error interno del servidor"
+      invalid_note_type: "El tipo de nota no es válido."
+      malformed_request: "El cuerpo de la solicitud contiene JSON invalido"
+      not_found: "Recurso no encontrado"
+      param_is_missing: "Parametro ausente"
+      utility_error: "Error en la utility"

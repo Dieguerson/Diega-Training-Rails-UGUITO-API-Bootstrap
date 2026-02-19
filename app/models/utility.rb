@@ -15,6 +15,9 @@
 #  jsonb                                :jsonb
 #  created_at                           :datetime         not null
 #  updated_at                           :datetime         not null
+#  lower_content_limit                  :integer
+#  upper_content_limit                  :integer
+#  max_review_length                    :integer
 #
 class Utility < ApplicationRecord
   include EntityWithCode
@@ -26,8 +29,11 @@ class Utility < ApplicationRecord
 
   validates :name, uniqueness: true
   validates :name, :type, presence: true
+  validates :lower_content_limit, :upper_content_limit, :max_review_length, 
+            presence: true, numericality: { only_integer: true, greater_than: 0 }
+  validate :upper_limit_greater_than_lower_limit
 
-  store_accessor :integration_urls, :external_api_authentication_url, :books_data_url
+  store_accessor :integration_urls, :external_api_authentication_url, :books_data_url, :notes_data_url
 
   def generate_entity_code
     return if code.present? && !code.to_i.zero?
@@ -73,9 +79,21 @@ class Utility < ApplicationRecord
     self.class.name.underscore.split('_').first
   end
 
+  def to_s
+    name
+  end
+
   private
 
   def utility_type
     type.chomp('Utility')
+  end
+
+  def upper_limit_greater_than_lower_limit
+    return if upper_content_limit.blank? || lower_content_limit.blank?
+    
+    if upper_content_limit <= lower_content_limit
+      errors.add(:upper_content_limit, 'must be greater than lower content limit')
+    end
   end
 end
